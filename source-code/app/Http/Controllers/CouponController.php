@@ -96,7 +96,7 @@ class CouponController extends Controller
             $input_data['status']=0;
         }
         $update_coupon->update($input_data);
-        return redirect()->route('coupon.index')->with('message','Edit Coupon Already!');
+        return redirect()->route('coupon.index')->with('message','Coupon updated!');
     }
 
     /**
@@ -109,7 +109,7 @@ class CouponController extends Controller
     {
         $delete_coupon=Coupon_model::findOrFail($id);
         $delete_coupon->delete();
-        return back()->with('message','Delete Coupon Already!');
+        return back()->with('message','Coupon deleted sucessfully!');
     }
     public function applycoupon(Request $request){
         $this->validate($request,[
@@ -124,17 +124,17 @@ class CouponController extends Controller
         }else if($check_coupon==1){
             $check_status=Coupon_model::where('status',1)->first();
             if($check_status->status==0){
-                return back()->with('message_coupon','Your Coupon was Disabled!');
+                return back()->with('message_coupon','Your coupon is disabled!');
             }else{
                 $expiried_date=$check_status->expiry_date;
                 $date_now=date('Y-m-d');
                 if($expiried_date<$date_now){
-                    return back()->with('message_coupon','Your Coupon was Expired!');
+                    return back()->with('message_coupon','Your Coupon has expired!');
                 }else{
                     $discount_amount_price=($total_amount_price*$check_status->amount)/100;
                     Session::put('discount_amount_price',$discount_amount_price);
                     Session::put('coupon_code',$check_status->coupon_code);
-                    return back()->with('message_apply_sucess','Your Coupon Code was Apply');
+                    return back()->with('message_apply_sucess','Happy discount :) ');
                 }
             }
         }

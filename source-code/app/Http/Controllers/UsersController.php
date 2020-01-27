@@ -15,6 +15,7 @@ class UsersController extends Controller
     public function index(){
         return view('users.login_register');
     }
+    // =====================================Register===============================================//
     public function register(Request $request){
         $this->validate($request,[
            'name'=>'required|string|max:255',
@@ -26,6 +27,8 @@ class UsersController extends Controller
         User::create($input_data);
         return back()->with('message','Registered already!');
     }
+    // =======================================Login=================================================//
+
     public function login(Request $request){
         $input_data=$request->all();
         if(Auth::attempt(['email'=>$input_data['email'],'password'=>$input_data['password']])){
@@ -35,11 +38,15 @@ class UsersController extends Controller
             return back()->with('message','Account is not Valid!');
         }
     }
+    // =======================================Logout=================================================//
+    
     public function logout(){
         Auth::logout();
         Session::forget('frontSession');
         return redirect('/');
     }
+    // ======================================Account=================================================//
+
     public function account(){
         $countries=DB::table('countries')->get();
         $user_login=User::where('id',Auth::id())->first();
@@ -60,9 +67,11 @@ class UsersController extends Controller
             'country'=>$input_data['country'],
             'pincode'=>$input_data['pincode'],
             'mobile'=>$input_data['mobile']]);
-        return back()->with('message','Update Profile already!');
+        return back()->with('message','Profile updated!');
 
     }
+    // ===================================Password Update================================================//
+
     public function updatepassword(Request $request,$id){
         $oldPassword=User::where('id',$id)->first();
         $input_data=$request->all();
@@ -72,7 +81,7 @@ class UsersController extends Controller
             ]);
             $new_pass=Hash::make($input_data['newPassword']);
             User::where('id',$id)->update(['password'=>$new_pass]);
-            return back()->with('message','Update Password Already!');
+            return back()->with('message','Password updated!');
         }else{
             return back()->with('oldpassword','Old Password is Inconrrect!');
         }

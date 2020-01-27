@@ -19,13 +19,13 @@ class CartController extends Controller
         }
         return view('frontEnd.cart',compact('cart_datas','total_price'));
     }
-
+    // ==================================Cart product addition==========================================//
     public function addToCart(Request $request){
         $inputToCart=$request->all();
         Session::forget('discount_amount_price');
         Session::forget('coupon_code');
         if($inputToCart['size']==""){
-            return back()->with('message','Please select Size');
+            return back()->with('message','Please select the size!');
         }else{
             $stockAvailable=DB::table('product_att')->select('stock','sku')->where(['products_id'=>$inputToCart['products_id'],
                 'price'=>$inputToCart['price']])->first();
@@ -44,23 +44,28 @@ class CartController extends Controller
                     'product_color'=>$inputToCart['product_color'],
                     'size'=>$inputToCart['size']])->count();
                 if($count_duplicateItems>0){
-                    return back()->with('message','This Item Added already');
+                    return back()->with('message','This Item is added already to your cart!');
                 }else{
                     Cart_model::create($inputToCart);
-                    return back()->with('message','Add To Cart Already');
+                    return back()->with('message','Added to cart :)');
                 }
             }else{
-                return back()->with('message','Stock is not Available!');
+                return back()->with('message','Unavailable stock hold!');
             }
         }
     }
+    // =====================================Cart product delete============================================//
+
     public function deleteItem($id=null){
         $delete_item=Cart_model::findOrFail($id);
         Session::forget('discount_amount_price');
         Session::forget('coupon_code');
         $delete_item->delete();
-        return back()->with('message','Deleted Success!');
+        return back()->with('message','Deleted successfully!');
     }
+
+    // ==================================Cart product quantity change=====================================//
+    
     public function updateQuantity($id,$quantity){
         Session::forget('discount_amount_price');
         Session::forget('coupon_code');
@@ -70,9 +75,9 @@ class CartController extends Controller
         $updated_quantity=$sku_size->quantity+$quantity;
         if($stockAvailable->stock>=$updated_quantity){
             DB::table('cart')->where('id',$id)->increment('quantity',$quantity);
-            return back()->with('message','Update Quantity already');
+            return back()->with('message','Quantity updated');
         }else{
-            return back()->with('message','Stock is not Available!');
+            return back()->with('message','Unavailable stockhold!');
         }
 
 

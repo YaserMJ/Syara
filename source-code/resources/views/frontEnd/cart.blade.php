@@ -5,11 +5,13 @@
 @section('content')
     <section id="cart_items">
         <div class="container">
+            {{--  --}}
             @if(Session::has('message'))
                 <div class="alert alert-success text-center" role="alert">
                     {{Session::get('message')}}
                 </div>
             @endif
+            {{-- Cart table --}}
             <div class="table-responsive cart_info">
                 <table class="table table-condensed">
                     <thead>
@@ -23,6 +25,7 @@
                     </tr>
                     </thead>
                     <tbody>
+                        {{-- Gets cart data and products from the table products --}}
                         @foreach($cart_datas as $cart_data)
                             <?php
                                 $image_products=DB::table('products')->select('image')->where('id',$cart_data->products_id)->get();

@@ -30,7 +30,7 @@
             </div>
             <div class="col-sm-4">
                 <div class="signup-form"><!--sign up form-->
-                    <h2>New User Signup!</h2>
+                    <h2>Become a part of the Syara community!</h2>
                     <form action="{{url('/register_user')}}" method="post" class="form-horizontal">
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
 

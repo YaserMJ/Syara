@@ -67,7 +67,7 @@ class ProductsController extends Controller
             }
         }
         Products_model::create($formInput);
-        return redirect()->route('product.create')->with('message','Add Products Successfully!');
+        return redirect()->route('product.create')->with('message','Product(s) added successfully!');
     }
 
     /**
@@ -133,7 +133,7 @@ class ProductsController extends Controller
             $formInput['image']=$update_product['image'];
         }
         $update_product->update($formInput);
-        return redirect()->route('product.index')->with('message','Update Products Successfully!');
+        return redirect()->route('product.index')->with('message','Product(s) updated successfully!');
     }
 
     /**
@@ -153,7 +153,7 @@ class ProductsController extends Controller
             unlink($image_medium);
             unlink($image_small);
         }
-        return redirect()->route('product.index')->with('message','Delete Success!');
+        return redirect()->route('product.index')->with('message','Delete successfully!');
     }
     public function deleteImage($id){
         //Products_model::where(['id'=>$id])->update(['image'=>'']);

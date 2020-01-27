@@ -57,7 +57,7 @@ class CategoryController extends Controller
         ]);
         $data=$request->all();
         Category_model::create($data);
-        return redirect()->route('category.index')->with('message','Added Success!');
+        return redirect()->route('category.index')->with('message','Added successfully!');
     }
 
     /**
@@ -106,7 +106,7 @@ class CategoryController extends Controller
             $input_data['status']=0;
         }
         $update_categories->update($input_data);
-        return redirect()->route('category.index')->with('message','Updated Success!');
+        return redirect()->route('category.index')->with('message','Updated successfully!');
     }
 
     /**
@@ -119,6 +119,6 @@ class CategoryController extends Controller
     {
         $delete=Category_model::findOrFail($id);
         $delete->delete();
-        return redirect()->route('category.index')->with('message','Delete Success!');
+        return redirect()->route('category.index')->with('message','Deleted successfully!');
     }
 }

@@ -42,7 +42,7 @@ class ProductAtrrController extends Controller
             'stock'=>'required|numeric'
         ]);
         ProductAtrr_model::create($request->all());
-        return back()->with('message','Add Attribute Successed');
+        return back()->with('message','Attribute added successfully');
     }
 
     /**
@@ -85,7 +85,7 @@ class ProductAtrrController extends Controller
                 ->update(['sku'=>$request_data['sku'][$key],'size'=>$request_data['size'][$key],'price'=>$request_data['price'][$key],
                     'stock'=>$request_data['stock'][$key]]);
         }
-        return back()->with('message','Update Attribute Successed');
+        return back()->with('message','Attribute updated successfully!');
     }
 
     /**
@@ -101,6 +101,6 @@ class ProductAtrrController extends Controller
     public function deleteAttr($id){
         $deleteAttr=ProductAtrr_model::findOrFail($id);
         $deleteAttr->delete();
-        return back()->with('message','Deleted Success!');
+        return back()->with('message','Deleted!');
     }
 }
